@@ -103,7 +103,7 @@ const EndScreen = ({ route, navigation }) => {
     alert("기록이 저장되었습니다!");
 
     // HomeScreen으로 이동 (뒤로 가기 방지를 위해 네비게이션 스택 초기화)
-    navigation.navigate("HomeSreen");
+    navigation.navigate("HomeScreen");
   };
 
   return (
