@@ -24,7 +24,7 @@ import Icon from "@expo/vector-icons/Ionicons";
  */
 const EndScreen = ({ route, navigation }) => {
   // WalkScreen에서 전달받은 운동 데이터
-  const { elapsedTime, distance, calories } = route.params;
+  const { elapsedTime, distance, calories, goal } = route.params;
 
   /**
    * 운동 시간 포맷팅 함수
@@ -94,6 +94,7 @@ const EndScreen = ({ route, navigation }) => {
     console.log("\n===== 운동 기록 =====");
     console.log("1. 운동 시간:", formattedDate);
     console.log("\n2. 운동 정보:");
+    console.log(`  - 운동 목적: ${goal}`);  // 이 줄을 추가합니다
     console.log(`  - 소요 시간: ${timeFormat.value}${timeFormat.unit}`);
     console.log(`  - 이동 거리: ${distanceFormat.value}${distanceFormat.unit}`);
     console.log(`  - 소모 칼로리: ${Math.round(calories)}kcal`);

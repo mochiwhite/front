@@ -5,6 +5,7 @@ import Login from "./src/components/Login";
 import SignUp from "./src/components/SignUp";
 import FirstData from "./src/components/FirstData";
 import HomeScreen from "./screens/HomeScreen";
+import SelectionScreen from "./screens/SelectionScreen";
 import WalkScreen from "./screens/WalkScreen";
 import EndScreen from "./screens/EndScreen";
 
@@ -32,6 +33,11 @@ function App() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SelectionScreen"
+          component={SelectionScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

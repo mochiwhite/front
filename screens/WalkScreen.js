@@ -12,7 +12,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 import * as Location from "expo-location";
 // import { useNavigation } from "@react-navigation/native";
 
-/**s
+/**
  * WalkScreen 컴포넌트
  * 사용자의 실시간 운동 현황을 추적하고 표시하는 화면
  *
@@ -27,11 +27,12 @@ import * as Location from "expo-location";
  * - Kakao Maps API: 지도 및 경로 표시
  */
 
-const WalkScreen = ({ navigation }) => {
+const WalkScreen = ({ navigation, route }) => {
   const [elapsedTime, setElapsedTime] = useState(0); // 경과 시간 (초)
   const [distance, setDistance] = useState(0); // 이동 거리 (km)
   const [lastPosition, setLastPosition] = useState(null); // 마지막 위치 정보
   const [isPaused, setIsPaused] = useState(false); // 일시정지 상태
+  const { selectedRoute } = route.params; // SelectionScreen에서 전달된 경로
   const webViewRef = useRef(null); // 카카오맵 WebView 참조
 
   /**
@@ -89,27 +90,7 @@ const WalkScreen = ({ navigation }) => {
                                 strokeStyle: 'solid'
                             });
                             window.polyline.setMap(window.map);
-                            /* 추천 경로 표시 기능
-                            // 추천 경로용 폴리라인 설정
-                            // 실제 이동 경로와 구분하기 위해 초록색 점선으로 표시
-                            window.recommendedPath = new kakao.maps.Polyline({
-                                path: [], // API에서 받아올 추천 경로 좌표
-                                strokeWeight: 5,
-                                strokeColor: '#28a745',  // 초록색
-                                strokeOpacity: 0.5,
-                                strokeStyle: 'dashed'    // 점선
-                            });
-                            window.recommendedPath.setMap(window.map);
-
-                            // 추천 경로 설정 함수
-                            window.setRecommendedPath = function(pathCoordinates) {
-                                // pathCoordinates: [{lat: number, lng: number}] 형태의 좌표 배열
-                                const path = pathCoordinates.map(coord => 
-                                    new kakao.maps.LatLng(coord.lat, coord.lng)
-                                );
-                                window.recommendedPath.setPath(path);
-                            };
-                            */
+                            
                             window.ReactNativeWebView.postMessage('MAP_INITIALIZED');
                         } catch (error) {
                             console.error('Map initialization error:', error);
@@ -124,7 +105,20 @@ const WalkScreen = ({ navigation }) => {
                                 console.error('Map not initialized');
                                 return;
                             }
-                            
+                            window.displaySelectedRoute = function(routePath) {
+                              const pathCoordinates = routePath.map(coord => 
+                                new kakao.maps.LatLng(coord.lat, coord.lng)
+                              );
+
+                              const recommendedPath = new kakao.maps.Polyline({
+                                  path: pathCoordinates,
+                                  strokeWeight: 5,
+                                  strokeColor: '#28a745',
+                                  strokeOpacity: 0.5,
+                                  strokeStyle: 'dashed'
+                              });
+                              recommendedPath.setMap(window.map);
+                            };
                             const position = new kakao.maps.LatLng(lat, lng);
                             
                             // 이동 경로 업데이트

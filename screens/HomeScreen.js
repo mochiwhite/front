@@ -94,11 +94,7 @@ const HomeScreen = ({ navigation }) => {
    * 현재 구현:
    * - 위치 권한 확인 및 현재 위치 정보 수집
    * - 수집된 정보 로깅
-   * - WalkScreen으로 임시 이동
-   *
-   * 향후 구현:
-   * - SelectionScreen으로 이동하여 상세 설정 진행
-   * - 설정 완료 후 WalkScreen으로 이동
+   * - SelectionScreen으로 이동
    */
   const getCurrentLocation = async () => {
     try {
@@ -128,8 +124,7 @@ const HomeScreen = ({ navigation }) => {
       );
       console.log("=======================");
 
-      navigation.navigate("WalkScreen");
-      /* 향후 구현될 네비게이션 로직
+      // SelectionScreen으로 이동
         navigation.navigate('SelectionScreen', {
             goal,
             time,
@@ -139,18 +134,6 @@ const HomeScreen = ({ navigation }) => {
                 longitude: location.coords.longitude
             }
         });
-        */
-
-      // 임시 구현: WalkScreen으로 직접 이동
-      //   navigation.navigate("WalkScreen", {
-      //     time,
-      //     distance,
-      //     initialLocation: {
-      //       latitude: location.coords.latitude,
-      //       longitude: location.coords.longitude,
-      //     },
-      //  }
-      //);
     } catch (error) {
       console.error("위치 정보를 가져오는 중 오류 발생:", error);
     }
